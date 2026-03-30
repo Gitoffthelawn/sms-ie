@@ -8,6 +8,11 @@ This project attempts to adhere to [Semantic Versioning](https://semver.org/spec
 
 ## [Unreleased]
 
+### Fixed
+
+ - Update Chinese (Simplified Han script) translation ([86ca934](https://github.com/tmo1/sms-ie/commit/86ca934f3b9b630da91b430eafd527d50db33e3a), [5caa952](https://github.com/tmo1/sms-ie/commit/5caa9528a92d2eff0e0727856420bfdce85d1318)) (大王叫我来巡山)
+ - Update Polish translation ([a5a51fb](https://github.com/tmo1/sms-ie/commit/a5a51fb58e1c81abc50b3c67e6ac4d7d0bc377bd)) (rehork)
+
 ## [2.9.0] - 2026-03-23
 
 ### Changed
@@ -44,6 +49,6 @@ This project attempts to adhere to [Semantic Versioning](https://semver.org/spec
  - Update Polish translation ([7318290](https://github.com/tmo1/sms-ie/commit/7318290720f6932c5872bb5b34aca9b89fc19ec1), [ae3f397](https://github.com/tmo1/sms-ie/commit/ae3f3979ba8844a160690e51687d3b266c0c8070)) (rehork)
  - Update Danish translation ([364fd9d](https://github.com/tmo1/sms-ie/commit/364fd9ddafd1322de5ad7a7ce37864e9707d69c1)) (catsnote)
 
-[Unreleased]: https://github.com/tmo1/sms-ie/compare/v2.8.0...HEAD
 [2.8.0]: https://github.com/tmo1/sms-ie/releases/tag/v2.8.0
 [2.9.0]: https://github.com/tmo1/sms-ie/releases/tag/v2.9.0
+[Unreleased]: https://github.com/tmo1/sms-ie/compare/v2.9.0...HEAD

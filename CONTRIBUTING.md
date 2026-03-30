@@ -53,7 +53,8 @@ The primary author of SMS Import / Export is [Thomas More](https://github.com/tm
  - [Vladi69](https://github.com/Vladi69): update to Italian
  - [Unknownman820](https://github.com/Unknownman820): Chinese (Traditional Han script)
  - [Lendary Sayajin (Bardock)](https://github.com/Bardock88): Portuguese (Brazil)
- - [rehork](https://github.com/rehork): update to Polish
+ - [rehork](https://github.com/rehork): updates to Polish
+ - Random: update to Italian
  
 ### Translations (Fastlane)
 
