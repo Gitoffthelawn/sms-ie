@@ -55,6 +55,7 @@ The primary author of SMS Import / Export is [Thomas More](https://github.com/tm
  - [Lendary Sayajin (Bardock)](https://github.com/Bardock88): Portuguese (Brazil)
  - [rehork](https://github.com/rehork): updates to Polish
  - Random: update to Italian
+ - [MarcMush](https://github.com/MarcMush): update to French
  
 ### Translations (Fastlane)
 

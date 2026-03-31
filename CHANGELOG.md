@@ -12,6 +12,7 @@ This project attempts to adhere to [Semantic Versioning](https://semver.org/spec
 
  - Update Chinese (Simplified Han script) translation ([86ca934](https://github.com/tmo1/sms-ie/commit/86ca934f3b9b630da91b430eafd527d50db33e3a), [5caa952](https://github.com/tmo1/sms-ie/commit/5caa9528a92d2eff0e0727856420bfdce85d1318)) (大王叫我来巡山)
  - Update Polish translation ([a5a51fb](https://github.com/tmo1/sms-ie/commit/a5a51fb58e1c81abc50b3c67e6ac4d7d0bc377bd)) (rehork)
+ - Update French translation ([cdb336b](https://github.com/tmo1/sms-ie/commit/cdb336b5f1dcf3e6147efcbad3d1f6099b459057)) (MarcMush)
 
 ## [2.9.0] - 2026-03-23
 
