@@ -1,8 +1,8 @@
 /*
  * SMS Import / Export: a simple Android app for importing and exporting SMS and MMS messages,
- * call logs, and contacts, from and to JSON / NDJSON files.
+ * call logs, contacts, and blocked numbers from and to JSON / NDJSON files.
  *
- * Copyright (c) 2025 Thomas More
+ * Copyright (c) 2025-2026 Thomas More
  *
  * This file is part of SMS Import / Export.
  *
@@ -45,6 +45,10 @@ import androidx.preference.PreferenceManager
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 const val SMS = 0
 const val MMS = 1
@@ -220,12 +224,12 @@ private fun getMessageFilters(prefs: SharedPreferences, list: ArrayList<MessageF
     }
 }
 
+@OptIn(ExperimentalTime::class)
 fun messageSelection(appContext: Context, messageType: Int): String? {
     val prefs = PreferenceManager.getDefaultSharedPreferences(appContext)
     val selection = if (prefs.getBoolean("message_filtering", false)) {
         val list = arrayListOf<MessageFilter>()
         getMessageFilters(prefs, list)
-        Log.d(LOG_TAG, list.toString())
         list.filter {
             it.active && ((messageType == SMS && !it.column.startsWith("mms.")) || (messageType == MMS && !it.column.startsWith(
                 "sms."
@@ -233,8 +237,31 @@ fun messageSelection(appContext: Context, messageType: Int): String? {
         }.joinToString(separator = " AND ") {
             var value = it.value
             if (it.column == "date" || it.column == "date_sent") {
-                if (messageType == SMS && value.length <= 11) value += "000"
-                else if (messageType == MMS && value.length > 11) value = value.dropLast(3)
+                when {
+                    value.contains('T', ignoreCase = true) -> {
+                        // 'value' is assumed to be an ISO 8601 Instant, and must contain at least 16 characters not including the initial year digits, i.e., at least '-MM-DDTHH:MM:SSZ':
+                        // https://youtrack.jetbrains.com/projects/KT/issues/KT-84399/Instant.parse-does-not-support-reduced-precision-ISO8601-dates
+                        // https://github.com/JetBrains/kotlin/blob/2.3.0/libraries/stdlib/src/kotlin/time/Instant.kt#L615
+                        value = Instant.parse(value).toEpochMilliseconds().toString()
+                    }
+
+                    value.contains('-') -> {
+                        // 'value' is assumed to be an ISO 8601 style date
+                        // We should really use something like the ISO_DATE formatter from DateTimeFormatter,
+                        // but that would require either minSdkVersion >= 26 or else the added complexity of API desugaring:
+                        // https://developer.android.com/studio/write/java8-support-table
+                        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                        val date = simpleDateFormat.parse(value)
+                        date?.let { value = date.time.toString() }
+                    }
+
+                    value.length <= 11 -> {
+                        // 'value' is assumed to be seconds since the epoch
+                        value += "000"
+                    }
+                    // If none of the above conditions hold, 'value' is assumed to be milliseconds since the epoch
+                }
+                if (messageType == MMS) value = value.dropLast(3)
             }
             "${it.column.substringAfter('.')} ${it.operator} $value"
         }

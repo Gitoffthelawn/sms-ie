@@ -26,13 +26,23 @@ Message filters have three fields:
  - `Operator`: an SQLite operator (these are officially documented [here](https://sqlite.org/lang_expr.html), and somewhat more readably [here](https://www.sqlitetutorial.net/sqlite-where/)).
  - `Column value`: a user-provided value.
  
-> [!WARNING] The app does not perform any syntax checking of provided column values, and it is the user's responsibility to ensure that the configured filter constitutes valid SQLite syntax. If it does not, subsequent exports and wipes will fail with [`SQLiteException`](https://developer.android.com/reference/android/database/sqlite/SQLiteException)s.
+Column names and operators are chosen from drop-down lists provided by the app; column values are entered by the user. All column values are used exactly as entered, with the exception of dates, as discussed in the following section.
+
+> [!WARNING] The app does not perform any syntax checking of provided column values, and it is the user's responsibility to ensure that the configured filter constitutes valid SQLite syntax. If it does not, subsequent exports, wipes, and counts will fail with [`SQLiteException`](https://developer.android.com/reference/android/database/sqlite/SQLiteException)s.
+> The app also does not currently implement parameter substitution in its `ContentProvider` calls, and so the message filtering framework is technically susceptible to [SQL injection]. This should not generally be a significant vulnerability, though, since message filters must be explicitly configured by the user.
 
 ### Dates
 
- Android stores timestamps in [Unix time](https://en.wikipedia.org/wiki/Unix_time), but bizarrely, [it stores SMS timestamps in **milliseconds** since the epoch, and MMS timestamps in **seconds** since the epoch](https://github.com/tmo1/sms-ie/issues/143). Accordingly, if the column name is `date` or `date_sent`, then if the column value contains 11 digits or fewer, SMS I/E will assume that it is in seconds since the epoch and add 3 zeros when using it in an SMS query, and if the column value contains more than 11 digits, the app will assume that it is in milliseconds and remove the three rightmost digits when using it in an MMS query.
+Dates (i.e., values for columns `date` and `date_sent`) can currently be specified in four formats:
+
+* If the value contains the letter 'T' (upper or lower case), it is assumed to be a [Java / Kotlin instant](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/) (and [must contain at least 16 characters](https://youtrack.jetbrains.com/projects/KT/issues/KT-84399/Instant.parse-does-not-support-reduced-precision-ISO8601-dates), not including the initial year digits [i.e., [at least -MM-DDTHH:MM:SSZ](https://github.com/JetBrains/kotlin/blob/2.3.0/libraries/stdlib/src/kotlin/time/Instant.kt#L615)]). E.g.: '2026-04-20T05:30:00Z'.
+* If it does not contain 'T' but does contain a hyphen ('-'), it is assumed to be [an ISO 8601 style date in the format `yyyy-MM-dd`](https://developer.android.com/reference/java/text/SimpleDateFormat). E.g.: '2026-04-20'.
+* If it contains neither 'T' nor '-' and is 11 or fewer characters, it is assumed to be in [Unix time](https://en.wikipedia.org/wiki/Unix_time), in seconds since the epoch. E.g.: '1776657600'.
+* If none of the above hold, it is assumed to be in milliseconds since the epoch. E.g.: '1776657600000'.
+
+For some mysterious reason, [Android stores SMS timestamps in **milliseconds** since the epoch, and MMS timestamps in **seconds** since the epoch](https://github.com/tmo1/sms-ie/issues/143). Internally, SMS I/E initially converts all the above date formats to milliseconds since the epoch. Subsequently, if the date is being used in an SMS query, it is used as is, and if it's being used in an MMS query, it's converted to seconds since the epoch.
  
- To convert between Unix time and human readable dates, use (on Unix-like systems) `date -d'@<unix_time>'` / `date -d<human_readable_date> +%s`, or use an online converter [such as this one](https://www.epochconverter.com/).)
+(To convert between Unix time and human readable dates, use (on Unix-like systems) `date -d'@<unix_time>'` / `date -d<human_readable_date> +%s`, or use an online converter [such as this one](https://www.epochconverter.com/).)
 
 ## Examples
 
