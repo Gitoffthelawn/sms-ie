@@ -48,14 +48,14 @@
     <string name="scheduled_export_executed">Geplanter Export ausgeführt</string>
     <string name="scheduled_export_success">%1$d SMS, %2$d MMS , %3$d Anruf(e) und %4$d Kontakt(e) exportiert.</string>
     <string name="wipe_messages">Lösche Nachrichten</string>
-    <string name="dialog_confirm_wipe">Warnung: Alle Nachrichten von diesem Gerät dauerhaft löschen, ohne es rückgängig machen zu können\?</string>
+    <string name="dialog_confirm_wipe">Warnung: Alle Nachrichten von diesem Gerät dauerhaft löschen, ohne es rückgängig machen zu können?</string>
     <string name="wipe">Löschen</string>
     <string name="cancel">Abbrechen</string>
     <string name="wipe_cancelled">Löschen abgebrochen</string>
     <string name="messages_wiped">Nachrichten gelöscht</string>
     <string name="wiping_sms_messages">Lösche SMS-Nachrichten…</string>
     <string name="wiping_mms_messages">Lösche MMS-Nachrichten…</string>
-    <string name="app_about_text">SMS Import / Export \n \nvon Thomas More\nund anderen Mitwirkenden \n \nVersion %1$s \n \nCopyright © 2021–25 \n \nVeröffentlicht unter der GNU GPLv3</string>
+    <string name="app_about_text">SMS Import / Export \n \nvon Thomas More\nund anderen Mitwirkenden \n \nVersion %1$s \n \nCopyright © 2021–2026 \n \nVeröffentlicht unter der GNU GPLv3</string>
     <string name="homepage">Homepage:</string>
     <string name="documentation">Dokumentation:</string>
     <string name="issue_tracker">Fehlermeldung:</string>
