@@ -56,6 +56,7 @@ The primary author of SMS Import / Export is [Thomas More](https://github.com/tm
  - [rehork](https://github.com/rehork): updates to Polish
  - Random: update to Italian
  - [MarcMush](https://github.com/MarcMush): update to French
+ - 大王叫我来巡山: update to Chinese (Traditional Han script)
  
 ### Translations (Fastlane)
 

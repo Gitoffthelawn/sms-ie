@@ -44,6 +44,8 @@ For some mysterious reason, [Android stores SMS timestamps in **milliseconds** s
  
 (To convert between Unix time and human readable dates, use (on Unix-like systems) `date -d'@<unix_time>'` / `date -d<human_readable_date> +%s`, or use an online converter [such as this one](https://www.epochconverter.com/).)
 
+**Note:** The date conversion routines will not currently work correctly on values that contain multiple dates, so the `BETWEEN` and `IN` operators should not be used with dates. (`BETWEEN date1 AND date2` can be simply rewritten as the two filters `>= date1` and `<= date2`.)
+
 ## Examples
 
 Following are some examples of message filter lists and the resulting message selections:
